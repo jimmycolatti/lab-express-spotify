@@ -36,7 +36,11 @@ app.get("/artist-search", (req, res) => {
     .searchArtists(req.query.artist)
     .then((data) => {
       console.log("The received data from the API: ", data.body)
-      res.render("artist-search-results")
+
+      let results = data.body.artists.items
+      res.render("artist-search-results", () => {
+        res.send(results)
+      })
     })
     .catch((err) =>
       console.log("The error while searching artists occurred: ", err)

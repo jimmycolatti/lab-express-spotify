@@ -5,6 +5,10 @@
     <title>Artist Search Results</title>
   </head>
   <body>
+    {{#each artistList}}
+      <p>{{name}}</p>
+      <img src="{{{images.0.url}}}" />
 
+    {{/each}}
   </body>
 </html>

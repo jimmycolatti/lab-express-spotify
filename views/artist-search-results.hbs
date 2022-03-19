@@ -5,10 +5,12 @@
     <title>Artist Search Results</title>
   </head>
   <body>
-    {{#each artistList}}
-      <p>{{name}}</p>
-      <img src="{{{images.0.url}}}" />
-
+    {{#each artists}}
+      <div>
+        <h4>{{name}}</h4>
+        <img width="200px" alt="{{name}}" src="{{images.0.url}}" />
+        <button><a href="/albums/{{id}}">View Albums</a></button>
+      </div>
     {{/each}}
   </body>
 </html>

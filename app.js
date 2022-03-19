@@ -12,7 +12,6 @@ app.set("view engine", "hbs")
 app.set("views", __dirname + "/views")
 app.use(express.static(__dirname + "/public"))
 
-// setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
@@ -37,14 +36,36 @@ app.get("/artist-search", (req, res) => {
     .then((data) => {
       console.log("The received data from the API: ", data.body)
 
-      let results = data.body.artists.items
-      console.log(results[0].images[0])
-
-      res.render("artist-search-results", { artistList: results })
+      res.render("artist-search-results", { artists: data.body.artists.items })
     })
     .catch((err) =>
       console.log("The error while searching artists occurred: ", err)
     )
+})
+
+app.get("/albums/:artistId", (req, res) => {
+  let artistId = req.params.artistId
+  spotifyApi.getArtistAlbums(artistId, { limit: 10, offset: 20 }).then(
+    function (data) {
+      console.log("Artist albums", data.body)
+      res.render("albums", { albums: data.body.items })
+    },
+    function (err) {
+      console.error(err)
+    }
+  )
+})
+
+app.get("/tracks/:albumId", (req, res) => {
+  let albumId = req.params.albumId
+  spotifyApi.getAlbumTracks(albumId, { limit: 5, offset: 1 }).then(
+    function (data) {
+      console.log(data.body)
+    },
+    function (err) {
+      console.log("Something went wrong!", err)
+    }
+  )
 })
 
 app.listen(3000, () =>

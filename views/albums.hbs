@@ -1,9 +1,22 @@
-<div>
+{{!-- <div>
   {{#each albums}}
     <div>
       <img width="200px" alt="Artist" src={{images.0.url}} />
       <h4>{{name}}</h4>
       <button><a href="/tracks/{{id}}">View Tracks</a></button>
     </div>
+  {{/each}}
+</div> --}}
+
+<div>
+  {{#each albums}}
+    <iframe
+      src="https://open.spotify.com/embed/album/{{id}}"
+      width="300"
+      height="380"
+      frameborder="0"
+      allowtransparency="true"
+      allow="encrypted-media"
+    ></iframe>
   {{/each}}
 </div>

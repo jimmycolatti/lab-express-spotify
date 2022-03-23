@@ -58,12 +58,12 @@ app.get("/albums/:artistId", (req, res) => {
 
 app.get("/tracks/:albumId", (req, res) => {
   let albumId = req.params.albumId
-  spotifyApi.getAlbumTracks(albumId, { limit: 5, offset: 1 }).then(
+  spotifyApi.getAlbumTracks(albumId).then(
     function (data) {
-      console.log(data.body)
+      res.render("tracks", { tracks: data.body.items })
     },
     function (err) {
-      console.log("Something went wrong!", err)
+      console.error(err)
     }
   )
 })

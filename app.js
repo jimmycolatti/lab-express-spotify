@@ -57,7 +57,7 @@ app.get("/albums/:artistId", (req, res) => {
 })
 
 // app.get("/tracks/:albumId", (req, res) => {
-//   let albumId = req.params.albumId
+//   const albumId = req.params.albumId
 //   spotifyApi.getAlbumTracks(albumId).then(
 //     function (data) {
 //       res.render("tracks", { tracks: data.body.items })
@@ -68,18 +68,15 @@ app.get("/albums/:artistId", (req, res) => {
 //   )
 // })
 
-app.get("/tracks/:albumId", (req, res) => {
-  let albumId = req.params.albumId
-  async function getAlbumTracks() {
-    try {
-      await function (data) {
-        res.render("tracks", { tracks: data.body.items })
-      }
-    } catch (err) {
-      console.error(err)
-    }
+app.get("/tracks/:albumId", async (req, res) => {
+  const albumId = req.params.albumId
+
+  try {
+    const data = await spotifyApi.getAlbumTracks(albumId)
+    res.render("tracks", { tracks: data.body.items })
+  } catch (err) {
+    console.error(err)
   }
-  spotifyApi.getAlbumTracks(albumId)
 })
 
 app.listen(3000, () =>
